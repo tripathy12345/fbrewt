@@ -3,7 +3,7 @@ clear all;
 close all;
 
 %%%%%%%%%%FFREWT Filter bank%%%%%%
-%%%%if you use this code, please cite the following paper%%%%%%%%%
+%%%%if you use this code, you need to cite the following paper%%%%%%%%%
 %Panda, R., Jain, S., Tripathy, R. K., & Acharya, U. R. (2020).
 %Detection of shockable ventricular cardiac arrhythmias from ECG signals using FFREWT 
 %filter-bank and deep convolutional neural network. Computers in Biology and Medicine, 124, 103939.
@@ -17,8 +17,8 @@ params.SamplingRate=Fs;
        
 ff=fft(f);
 freq=[5 10 15 20 25 30 35 40]; %%%%%you can change this range
-boundaries=(2*pi*freq)/Fs;
-% We build the corresponding filter bank
+boundaries=(2*pi*freq)/Fs; %%%Relation between frequency and boundary in EWT
+% Build the corresponding filter bank
 div=1;
 mfb=EWT_Meyer_FilterBank(boundaries,length(ff));
  Show_EWT_Boundaries(abs(fft(f)),boundaries,div,params.SamplingRate);
@@ -30,7 +30,7 @@ hold on
 end
 xlim([0 Fs/2])
 ylim([0 2])
-% We filter the signal to extract each subband
+% Extraction of subbands
 ewt=cell(length(mfb),1);
 for k=1:length(mfb)
     mm=real(ifft(conj(mfb{k}).*ff));
